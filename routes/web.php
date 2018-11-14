@@ -40,3 +40,6 @@ Route::patch('posts/{id}', 'PostsController@update')->name('posts.update');
 
 //刪除指定的公告
 Route::delete('posts/{id}', 'PostsController@destroy')->name('posts.destroy');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
