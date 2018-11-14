@@ -15,12 +15,34 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">處室公告</a>
             </li>
+
+            @guest
             <li class="nav-item">
                 <a class="nav-link disabled" href="{{ route('login') }}">[ 登入 ]</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="{{ route('register') }}">[ 註冊 ]</a>
             </li>
+            @endguest
+            @auth
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ auth()->user()->name }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();">
+                            [ 登出 ]
+                        </a>
+                    </div>
+                </li>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                      style="display: none;">
+                    @csrf
+                </form>
+            @endauth
         </ul>
     </div>
 </nav>
