@@ -10,6 +10,7 @@
             <div class="col-12">
                 <form method="post" action="{{ route('posts.store') }}">
 
+
                     <div class="form-group">
                         <label for="title">標題</label>
                         <input type="text" class="form-control" name="title" id="title" value="">
