@@ -23,6 +23,7 @@
                         <label for="files">附件</label>
                         <input type="file" class="form-group" name="files[]" id="files" multiple>
                     </div>
+                    <button class="btn-primary btn-sm">儲存</button>
 
 
                 </form>
