@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostsController extends Controller
 {
@@ -13,9 +14,10 @@ class PostsController extends Controller
      */
     public function index()
     {
+        $posts = DB::select('select * from posts order by id DESC ');
         $data = [
-            'name' => 'Tom',
-            'sex' => 'boy'
+            //Key => 值
+            'posts' => $posts,
         ];
         return view('posts.index', $data);
     }
@@ -38,7 +40,16 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $att['title'] = $request->input('title');
+        $att['content'] = $request->input('content');
+        $att['user_id'] = auth()->user()->id;
+        $att['views'] = 0;
+        $att['created_at'] = now();
+        $att['updated_at'] = now();
+        DB::insert('insert into posts (title, content, user_id, views, created_at, updated_at) values (?,?,?,?,?,?)',
+            [$att['title'], $att['content'], $att['user_id'], $att['views'], $att['created_at'], $att['updated_at']]);
+
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -49,7 +60,12 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = DB::select("select * from posts where $id = ?", [$id]);
+        $data = [
+            //Key => 值
+            'post' => $post,
+        ];
+        return view('posts.show', $data);
     }
 
     /**
