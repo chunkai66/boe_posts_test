@@ -60,10 +60,11 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post = DB::select("select * from posts where $id = ?", [$id]);
+        $post = DB::select("select * from posts where id=?", [$id]);
+//        dd($post);
         $data = [
             //Key => 值
-            'post' => $post,
+            'post' => $post[0],
         ];
         return view('posts.show', $data);
     }
@@ -76,7 +77,14 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        return view('posts.edit');
+        $post = DB::select("select * from posts where id=?", [$id]);
+//        dd($post);
+        $data = [
+            //Key => 值
+            'post' => $post[0],
+        ];
+
+        return view('posts.edit', $data);
     }
 
     /**
@@ -88,7 +96,13 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $att['title'] = $request->input('title');
+        $att['content'] = $request->input('content');
+
+        DB::update('update posts set title=?,content=? where id =?',
+            [$att['title'], $att['content'], $id]);
+
+        return redirect()->route('posts.index');
     }
 
     /**
