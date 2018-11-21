@@ -35,6 +35,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 
 
+
 //首頁
 Route::get('/', function () {
     return view('index');
@@ -43,28 +44,28 @@ Route::get('/', function () {
 //顯示公告
 Route::get('posts', 'PostsController@index')->name('posts.index');
 
-//建立公告的頁面
-Route::get('posts/create', 'PostsController@create')->name('posts.create');
-
-//在建立公告的頁面送出公告
-Route::post('posts', 'PostsController@store')->name('posts.store');
-
 //讀取公告
-Route::get('posts/{post}', 'PostsController@show')->name('posts.show');
+Route::get('posts/{post}', 'PostsController@show')->where('post', '[0-9]+')->name('posts.show');
 
-//顯示要修改的指定公告頁面
-Route::get('posts/{post}/edit', 'PostsController@edit')->name('posts.edit');
+//利用adminMiddleware中介
+Route::group(['middleware' => 'admin'], function () {
+    //建立公告的頁面
+    Route::get('posts/create', 'PostsController@create')->name('posts.create');
+    //在建立公告的頁面送出公告
+    Route::post('posts', 'PostsController@store')->name('posts.store');
+    //顯示要修改的指定公告頁面
+    Route::get('posts/{post}/edit', 'PostsController@edit')->name('posts.edit');
+    //送出要修改的指定公告內容
+    Route::patch('posts/{post}', 'PostsController@update')->name('posts.update');
+    //刪除指定的公告
+    Route::delete('posts/{post}', 'PostsController@destroy')->name('posts.destroy');
+});
 
-//送出要修改的指定公告內容
-Route::patch('posts/{post}', 'PostsController@update')->name('posts.update');
-
-//刪除指定的公告
-Route::delete('posts/{post}', 'PostsController@destroy')->name('posts.destroy');
 
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
-//站內公告
+//站內公告利用auth中介認証
 Route::group(['middleware' => 'auth'], function () {
     Route::get('inside', function () {
         return view('inside');
