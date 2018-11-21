@@ -27,4 +27,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * 一個User可以有多個公告posts
+     *
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
 }

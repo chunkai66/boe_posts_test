@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +15,16 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = DB::select('select * from posts order by id DESC ');
+        //用DB的方法
+        //$posts = DB::select('select * from posts order by id DESC ');
+        /**用eloquent
+         * //使用forPage()排頁次，但是views要另外找用哪種方法顯示分頁
+         * //$posts = Post::all()->sortByDesc('id')->forPage(2,3);
+         * //利用eloguent的Post::orderBy排序
+         *
+         */
+        $posts = Post::orderBy('id', 'DESC')->paginate(3);
+
         $data = [
             //Key => 值
             'posts' => $posts,
