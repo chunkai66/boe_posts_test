@@ -13,7 +13,7 @@ class PostsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,26 @@ class PostsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'content' => 'required',
+            'files.*' => 'nullable|mimes:jpeg,bmp,png,pdf,odt|max:5120',
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'title' => '標題',
+            'content' => '內容',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'title.required' => ':attribute 不可空白',
+            'content.required' => ':attribute 不可空白',
+        ];
+    }
+
 }
