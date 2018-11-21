@@ -12,9 +12,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('posts.index') }}">公告系統</a>
             </li>
+            @auth
             <li class="nav-item">
-                <a class="nav-link" href="#">處室公告</a>
+                <a class="nav-link" href="{{ route('inside') }}">處室公告</a>
             </li>
+            @endauth
 
             @guest
             <li class="nav-item">

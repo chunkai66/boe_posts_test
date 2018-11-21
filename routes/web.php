@@ -50,16 +50,26 @@ Route::get('posts/create', 'PostsController@create')->name('posts.create');
 Route::post('posts', 'PostsController@store')->name('posts.store');
 
 //讀取公告
-Route::get('posts/{id}', 'PostsController@show')->name('posts.show');
+Route::get('posts/{post}', 'PostsController@show')->name('posts.show');
 
 //顯示要修改的指定公告頁面
-Route::get('posts/{id}/edit', 'PostsController@edit')->name('posts.edit');
+Route::get('posts/{post}/edit', 'PostsController@edit')->name('posts.edit');
 
 //送出要修改的指定公告內容
-Route::patch('posts/{id}', 'PostsController@update')->name('posts.update');
+Route::patch('posts/{post}', 'PostsController@update')->name('posts.update');
 
 //刪除指定的公告
-Route::delete('posts/{id}', 'PostsController@destroy')->name('posts.destroy');
+Route::delete('posts/{post}', 'PostsController@destroy')->name('posts.destroy');
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
+
+//站內公告
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('inside', function () {
+        return view('inside');
+    })->name('inside');
+});
+
+
+

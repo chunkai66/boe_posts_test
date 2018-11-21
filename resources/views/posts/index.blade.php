@@ -32,7 +32,7 @@
                                 {{ $post->created_at }}
                             </td>
                             <td>
-                                {{ $post->user_id }}
+                                {{ $post->user->name }}
                             </td>
                             <td>
                                 <a href="{{ route('posts.show',$post->id) }}">{{ $post->title }}</a>
