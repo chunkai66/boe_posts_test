@@ -95,6 +95,13 @@ class PostsController extends Controller
     public function edit(Post $post)
     {
 
+        //$this->authorize('update', $post);
+        /*
+        if($post->user_id != auth()->user()->id)
+        {
+            abort('405','你沒有被授權');
+        }
+        */
         //$post = DB::select("select * from posts where id=?", [$id]);
 //        dd($post);
 
@@ -115,6 +122,8 @@ class PostsController extends Controller
      */
     public function update(PostsRequest $request, Post $post)
     {
+        $this->authorize('update', $post);
+
         $att['title'] = $request->input('title');
         $att['content'] = $request->input('content');
 
