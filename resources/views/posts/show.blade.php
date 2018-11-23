@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-12">
                 <h2>{{ $post->title }}</h2>
+                <p>點閱數：{{ $post->views }}</p>
                 <a href="{{ route('posts.index') }}" class="btn-secondary btn-sm">返回</a>
                 @can('update',$post)
                     <a href="{{ route('posts.edit',$post->id) }}" class="btn-primary btn-sm">編輯</a>

@@ -79,6 +79,18 @@ class PostsController extends Controller
 
         //dd($post);
 
+        $post_key = 'post' . $post->id;
+
+        if (session($post_key) != 1) {
+            //更新views的值
+            $att['views'] = $post->views + 1;
+            $post->update($att);
+        }
+
+        session([$post_key => 1]);
+
+
+
         $data = [
             //Key => 值
             'post' => $post,
