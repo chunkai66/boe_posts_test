@@ -8,7 +8,7 @@
                 <a href="{{ route('posts.index') }}" class="btn-secondary btn-sm">返回</a>
             </div>
             <div class="col-12">
-                <form method="post" action="{{ route('posts.store') }}">
+                <form method="post" action="{{ route('posts.store') }}" enctype="multipart/form-data">
                     @csrf
                     @if ($errors->any())
                         <div class="alert alert-danger alert-dismissible" role="alert">

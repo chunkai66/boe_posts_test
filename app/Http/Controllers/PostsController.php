@@ -61,7 +61,22 @@ class PostsController extends Controller
         DB::insert('insert into posts (title, content, user_id, views, created_at, updated_at) values (?,?,?,?,?,?)',
             [$att['title'], $att['content'], $att['user_id'], $att['views'], $att['created_at'], $att['updated_at']]);
         */
-        Post::create($att);
+        $post = Post::create($att);
+
+        //處理上傳檔案
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                $info = [
+                    'mime-type' => $file->getMimeType(),
+                    'original_filename' => $file->getClientOriginalName(),
+                    'extension' => $file->getClientOriginalExtension(),
+                    'size' => $file->getClientSize(),
+                ];
+
+                $file->storeAs('public/posts/' . $post->id, $info['original_filename']);
+            }
+        }
 
         return redirect()->route('posts.index');
     }
@@ -142,6 +157,21 @@ class PostsController extends Controller
         $post->update($att);
         //DB::update('update posts set title=?,content=? where id =?',
         //    [$att['title'], $att['content'], $id]);
+
+        //處理上傳檔案
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                $info = [
+                    'mime-type' => $file->getMimeType(),
+                    'original_filename' => $file->getClientOriginalName(),
+                    'extension' => $file->getClientOriginalExtension(),
+                    'size' => $file->getClientSize(),
+                ];
+
+                $file->storeAs('public/posts/' . $post->id, $info['original_filename']);
+            }
+        }
 
         return redirect()->route('posts.index');
     }

@@ -26,7 +26,8 @@ class PostsRequest extends FormRequest
         return [
             'title' => 'required',
             'content' => 'required',
-            'files.*' => 'nullable|mimes:jpeg,bmp,png,pdf,odt|max:5120',
+            //'files.*' => 'nullable|mimes:jpeg,bmp,png,pdf,odt|max:5120',
+            'files.*' => 'nullable',
         ];
     }
 

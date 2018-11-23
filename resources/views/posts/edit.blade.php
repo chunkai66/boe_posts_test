@@ -8,7 +8,7 @@
                 <a href="{{ route('posts.index') }}" class="btn-secondary btn-sm">返回</a>
             </div>
             <div class="col-12">
-                <form method="post" action="{{ route('posts.update',$post->id) }}">
+                <form method="post" action="{{ route('posts.update',$post->id) }}" enctype="multipart/form-data">
                     @csrf
                     {{ method_field('PATCH') }}
                     @if ($errors->any())
