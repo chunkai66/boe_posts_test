@@ -21,6 +21,15 @@
                 <div class="card-body">
                     {{ $post->content }}
                 </div>
+                <div class="card-footer">
+                    附件：<br>
+                    @if(!empty($files))
+                        @foreach($files as $file)
+                            <a href="{{ route('posts.download',['id'=>$post->id,'filename'=>$file]) }}"
+                               class="btn btn-primary btn-sm"><i class="fas fa-download">{{ $file }}</i></a><br>
+                        @endforeach
+                    @endif
+                </div>
             </div>
         </div>
     </div>

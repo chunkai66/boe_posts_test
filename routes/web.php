@@ -47,6 +47,9 @@ Route::get('posts', 'PostsController@index')->name('posts.index');
 //讀取公告
 Route::get('posts/{post}', 'PostsController@show')->where('post', '[0-9]+')->name('posts.show');
 
+//下載檔案
+Route::get('download/{id}/{filename}', 'PostsController@download')->name('posts.download');
+
 //利用adminMiddleware中介
 Route::group(['middleware' => 'admin'], function () {
     //建立公告的頁面

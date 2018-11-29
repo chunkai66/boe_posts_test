@@ -89,6 +89,8 @@ class PostsController extends Controller
      */
     public function show(Post $post)
     {
+        $files = get_files(storage_path('app/public/posts/' . $post->id));
+
         //$post = DB::select("select * from posts where id=?", [$id]);
         //$post = Post::where('id','=',$id)->first();
 
@@ -109,6 +111,7 @@ class PostsController extends Controller
         $data = [
             //Key => 值
             'post' => $post,
+            'files' => $files,
         ];
         return view('posts.show', $data);
     }
@@ -188,5 +191,11 @@ class PostsController extends Controller
 
         //DB::delete('delete from posts where id=?', [$id]);
         return redirect()->route('posts.index');
+    }
+
+    public function download($id, $filename)
+    {
+        $file = storage_path('app/public/posts/' . $id . '/' . $filename);
+        return response()->download($file);
     }
 }
